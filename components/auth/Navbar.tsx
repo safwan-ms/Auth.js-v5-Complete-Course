@@ -8,39 +8,39 @@ const Navbar = () => {
         My Fancy Website
       </Link>
       <ul className="hidden md:flex space-x-4 list-none">
-        {!user ? (
-          <>
-            <li>
-              <Link href="/login" className="hover:text-gray-400">
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link href="/register" className="hover:text-gray-400">
-                Register
-              </Link>
-            </li>
-          </>
-        ) : (
-          <>
-            <li className="mt-2">
-              <Link href="/private/dashboard" className="hover:text-gray-400">
-                Dashboard
-              </Link>
-            </li>
+        {/* {!user ? ( */}
+        <>
+          <li>
+            <Link href="/login" className="hover:text-gray-400">
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link href="/register" className="hover:text-gray-400">
+              Register
+            </Link>
+          </li>
+        </>
+        {/* ) : ( */}
+        <>
+          <li className="mt-2">
+            <Link href="/private/dashboard" className="hover:text-gray-400">
+              Dashboard
+            </Link>
+          </li>
 
-            <form
-              action={async () => {
-                "use server";
-                await signOut();
-              }}
-            >
-              <Button type="submit" variant={"ghost"}>
-                Logout
-              </Button>
-            </form>
-          </>
-        )}
+          <form
+          //   action={async () => {
+          //     "use server";
+          //     await signOut();
+          //   }}
+          >
+            <Button type="submit" variant={"ghost"}>
+              Logout
+            </Button>
+          </form>
+        </>
+        {/* )} */}
       </ul>
     </nav>
   );
