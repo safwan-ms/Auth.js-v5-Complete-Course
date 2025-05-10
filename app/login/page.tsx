@@ -1,4 +1,5 @@
 import { login } from "@/actions/user";
+import { signIn } from "@/auth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
@@ -36,7 +37,14 @@ const Login = () => {
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
       </form>
 
-      <form className="mb-2">
+      <form
+        className="mb-2"
+        action={async () => {
+          "use server";
+
+          await signIn("github");
+        }}
+      >
         <button
           className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
           type="submit"
