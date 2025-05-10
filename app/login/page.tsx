@@ -1,11 +1,13 @@
 import { login } from "@/actions/user";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import Link from "next/link";
 
-const Login = () => {
+const Login = async () => {
+  const session = await auth();
+
   return (
     <div className="mt-10 max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white border border-[#121212]  dark:bg-black">
       <form className="my-8" action={login}>
@@ -56,7 +58,13 @@ const Login = () => {
         </button>
       </form>
 
-      <form>
+      <form
+        action={async () => {
+          "use server";
+
+          await signIn("google");
+        }}
+      >
         <button
           className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
           type="submit"
