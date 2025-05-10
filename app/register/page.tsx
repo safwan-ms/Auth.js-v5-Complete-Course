@@ -1,3 +1,4 @@
+import { register } from "@/actions/user";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
@@ -12,7 +13,7 @@ const Register = () => {
         Please provide all the necessary information
       </p>
 
-      <form className="my-8">
+      <form className="my-8" action={register}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <div className="flex flex-col w-full">
             <Label className="mb-2">First Name</Label>
