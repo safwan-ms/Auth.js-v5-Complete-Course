@@ -1,24 +1,35 @@
 "use server";
 
-import { connectDB } from "@/lib/db";
+import { signIn } from "@/auth";
+import connectDB from "@/lib/db";
 import { User } from "@/models/User";
 import { hash } from "bcryptjs";
+import { CredentialsSignin } from "next-auth";
 import { redirect } from "next/navigation";
 
-const register = async (formData: FormData) => {
-  const firstName = formData.get("firstname");
-  const lastName = formData.get("lastname");
-  const email = formData.get("email");
-  const password = formData.get("password");
+const login = async (formData: FormData): Promise<void> => {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
-  if (
-    typeof firstName !== "string" ||
-    typeof lastName !== "string" ||
-    typeof email !== "string" ||
-    typeof password !== "string"
-  ) {
-    throw new Error("Invalid form data");
+  try {
+    await signIn("credentials", {
+      redirect: false,
+      callbackUrl: "/",
+      email,
+      password,
+    });
+  } catch (error) {
+    const someError = error as CredentialsSignin;
+    console.error(someError.cause);
   }
+  redirect("/");
+};
+
+const register = async (formData: FormData) => {
+  const firstName = formData.get("firstname") as string;
+  const lastName = formData.get("lastname") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
   await connectDB();
 
@@ -38,4 +49,4 @@ const register = async (formData: FormData) => {
   console.log("User created successfully🥂");
   redirect("/login");
 };
-export { register };
+export { register, login };
